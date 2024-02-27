@@ -1,24 +1,16 @@
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>My blog</title>
-    <link rel="stylesheet" href="/app.css">
-</head>
-<body>
-<?php foreach ($posts as $post) : ?>
-<article>
-    <h1>
-        <a href="/posts/<?= $post->slug; ?>">
-            {{ $post->title }}
-        </a>
+@extends('components.layout')
 
-    </h1>
-
-    <div>
-        {{ $post->excerpt }}
-    </div>
-</article>
-
-</body>
-<?php endforeach; ?>
-</html>
+@section('content')
+    @foreach ($posts as $post)
+        <article>
+            <h1>
+                <a href="/posts/<?= $post->slug; ?>">
+                    {{ $post->title }}
+                </a>
+            </h1>
+            <div>
+                {{ $post->excerpt }}
+            </div>
+        </article>
+    @endforeach
+@endsection

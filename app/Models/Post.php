@@ -18,7 +18,7 @@ class Post
     public $slug;
 
 
-    public function __construct($title, $excerpt, $date, $body,$slug)
+    public function __construct($title, $excerpt, $date, $body, $slug)
     {
         $this->title = $title;
         $this->excerpt = $excerpt;
@@ -30,12 +30,22 @@ class Post
 
     public static function find($slug)
     {
-        Return static::all()->firstWhere('slug', $slug);
+        return static::all()->firstWhere('slug', $slug);
+    }
+
+    public static function findOrFail($slug)
+    {
+        $post = static::find($slug);
+
+        if (!$post) {
+            throw new ModelNotFoundException();
+        }
+        return $post;
     }
 
     public static function all()
     {
-       return  collect(File::files(resource_path("posts")))
+        return collect(File::files(resource_path("posts")))
             ->map(fn($file) => YamlFrontMatter::parseFile($file))
             ->map(fn($document) => new Post(
                 $document->title,
